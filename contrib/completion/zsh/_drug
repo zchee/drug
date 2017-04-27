@@ -62,7 +62,7 @@ function _drug() {
 
         (take)
           _arguments \
-            "1:drug name:($(drug list -l))" \
+            "1:drug name:($(drug list -n))" \
           && ret=0
           ;;
         (help)
