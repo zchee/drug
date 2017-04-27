@@ -15,8 +15,7 @@ import (
 
 var takeCommand = cli.Command{
 	Name:      "take",
-	Usage:     "TODO",
-	Flags:     []cli.Flag{},
+	Usage:     "Record the ingestion time of the drug.",
 	ArgsUsage: "<drug name>",
 	Before:    initTake,
 	Action:    runTake,
