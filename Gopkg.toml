@@ -1,6 +1,14 @@
 
 [[dependencies]]
   branch = "master"
+  name = "github.com/pkgutil/osutil"
+
+[[dependencies]]
+  branch = "master"
+  name = "github.com/sirupsen/logrus"
+
+[[dependencies]]
+  branch = "master"
   name = "github.com/urfave/cli"
 
 [[dependencies]]

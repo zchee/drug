@@ -1,13 +1,31 @@
-memo = "f95c353016f758d8b9ceb82c0102b18b5ebe41ab18d53720b391cd95b3f8a5ec"
+memo = "194c16555ea9fdc17f2349d64130d9712cfcf0f88e83b5415b05ee6be6b3a422"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/pkgutil/osutil"
+  packages = ["."]
+  revision = "2114b006ce9b46aab99fc7c623940ae0b81bcf3d"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  revision = "10f801ebc38b33738c9d17d50860f484a0988ff5"
 
 [[projects]]
   branch = "master"
   name = "github.com/urfave/cli"
   packages = ["."]
-  revision = "9e5b04886c4bfee2ceba1465b8121057355c4e53"
+  revision = "ab403a54a148f2d857920810291539e1f817ee7b"
 
 [[projects]]
   branch = "master"
   name = "github.com/zchee/go-xdgbasedir"
   packages = [".","home"]
   revision = "9e3b9735d059747e24923def768d235d9df86b21"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "9ccfe848b9db8435a24c424abbc07a921adf1df5"
