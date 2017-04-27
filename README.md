@@ -1,6 +1,6 @@
 # drug
 
-drug command records the ingestion time of the medicine.
+drug command implements a record the ingestion time of the medicine.
 
 | **CI (linux)**                              | **godoc.org**                      | **codecov.io**                          | **Release**                          |
 |:-------------------------------------------:|:----------------------------------:|:---------------------------------------:|:------------------------------------:|
