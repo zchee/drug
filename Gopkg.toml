@@ -1,6 +1,10 @@
 
 [[dependencies]]
   branch = "master"
+  name = "github.com/olekukonko/tablewriter"
+
+[[dependencies]]
+  branch = "master"
   name = "github.com/pkgutil/osutil"
 
 [[dependencies]]

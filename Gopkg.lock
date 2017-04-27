@@ -1,4 +1,16 @@
-memo = "194c16555ea9fdc17f2349d64130d9712cfcf0f88e83b5415b05ee6be6b3a422"
+memo = "49da87bf6e717dd4bc883d1766df11abd0aeb70bdee685f230426095ce262bef"
+
+[[projects]]
+  name = "github.com/mattn/go-runewidth"
+  packages = ["."]
+  revision = "9e777a8366cce605130a531d2cd6363d07ad7317"
+  version = "v0.0.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/olekukonko/tablewriter"
+  packages = ["."]
+  revision = "febf2d34b54a69ce7530036c7503b1c9fbfdf0bb"
 
 [[projects]]
   branch = "master"
