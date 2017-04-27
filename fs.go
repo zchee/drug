@@ -10,14 +10,11 @@ import (
 	xdgbasedir "github.com/zchee/go-xdgbasedir"
 )
 
+var (
+	dataFile   = filepath.Join(dataDir(), "drug.json")
+	configFile = filepath.Join(dataDir(), "config.json")
+)
+
 func dataDir() string {
 	return filepath.Join(xdgbasedir.DataHome(), "drug")
-}
-
-func dataFile() string {
-	return filepath.Join(dataDir(), "drug.json")
-}
-
-func configFile() string {
-	return filepath.Join(dataDir(), "config.json")
 }

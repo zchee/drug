@@ -37,11 +37,11 @@ func initList(ctx *cli.Context) error {
 }
 
 func runList(ctx *cli.Context) error {
-	if osutil.IsNotExist(dataFile()) {
-		return fmt.Errorf("Not exist %s file", dataFile())
+	if osutil.IsNotExist(dataFile) {
+		return fmt.Errorf("Not exist %s file", dataFile)
 	}
 
-	f, err := ioutil.ReadFile(dataFile())
+	f, err := ioutil.ReadFile(dataFile)
 	if err != nil {
 		return err
 	}

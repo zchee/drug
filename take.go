@@ -37,8 +37,8 @@ func runTake(ctx *cli.Context) error {
 	}
 
 	var data []*format
-	if osutil.IsExist(dataFile()) {
-		oldData, err := ioutil.ReadFile(dataFile())
+	if osutil.IsExist(dataFile) {
+		oldData, err := ioutil.ReadFile(dataFile)
 		if err != nil {
 			return err
 		}
@@ -61,7 +61,7 @@ func runTake(ctx *cli.Context) error {
 		return err
 	}
 
-	if err := ioutil.WriteFile(dataFile(), out, 0644); err != nil {
+	if err := ioutil.WriteFile(dataFile, out, 0644); err != nil {
 		return err
 	}
 
