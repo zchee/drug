@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/urfave/cli"
@@ -40,6 +41,11 @@ func main() {
 
 	cli.ErrWriter = &fatalWriter{cli.ErrWriter}
 	if err := app.Run(os.Args); err != nil {
-		os.Exit(1)
+		fatal(err)
 	}
+}
+
+func fatal(err error) {
+	fmt.Fprintln(os.Stderr, err)
+	os.Exit(1)
 }

@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
@@ -49,5 +50,6 @@ type fatalWriter struct {
 
 // Write implements io.Writer interface.
 func (f *fatalWriter) Write(b []byte) (n int, err error) {
+	logrus.Error(string(b))
 	return f.cliErrWriter.Write(b)
 }

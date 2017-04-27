@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/pkgutil/osutil"
-	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
@@ -34,21 +33,21 @@ func initTake(ctx *cli.Context) error {
 
 func runTake(ctx *cli.Context) error {
 	if err := checkArgs(ctx, 1, minArgs, "drug name"); err != nil {
-		logrus.Fatal(err)
+		return err
 	}
 
 	var data []*format
 	if osutil.IsExist(dataFile()) {
 		oldData, err := ioutil.ReadFile(dataFile())
 		if err != nil {
-			logrus.Fatal(err)
+			return err
 		}
 		if err := json.Unmarshal(oldData, &data); err != nil {
-			logrus.Fatal(err)
+			return err
 		}
 	} else {
 		if err := osutil.MkdirAll(dataDir(), 0700); err != nil {
-			logrus.Fatal(err)
+			return err
 		}
 	}
 
@@ -59,11 +58,11 @@ func runTake(ctx *cli.Context) error {
 	data = append(data, d)
 	out, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
-		logrus.Fatal(err)
+		return err
 	}
 
 	if err := ioutil.WriteFile(dataFile(), out, 0644); err != nil {
-		logrus.Fatal(err)
+		return err
 	}
 
 	return nil

@@ -6,13 +6,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
 
 	"github.com/olekukonko/tablewriter"
 	"github.com/pkgutil/osutil"
-	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
@@ -38,16 +38,16 @@ func initList(ctx *cli.Context) error {
 
 func runList(ctx *cli.Context) error {
 	if osutil.IsNotExist(dataFile()) {
-		log.Errorf("Not exist %s file", dataFile())
+		return fmt.Errorf("Not exist %s file", dataFile())
 	}
 
 	f, err := ioutil.ReadFile(dataFile())
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	data := []*format{}
 	if err := json.Unmarshal(f, &data); err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
