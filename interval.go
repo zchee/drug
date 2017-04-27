@@ -19,14 +19,24 @@ var intervalCommand = cli.Command{
 	Name:      "interval",
 	Usage:     "Calculate the ingestion interval of the drug.",
 	ArgsUsage: "<drug name>",
-	Before:    initInterval,
-	Action:    runInterval,
+	Flags: []cli.Flag{
+		cli.BoolFlag{
+			Name:  "n, now",
+			Usage: "until now",
+		},
+	},
+	Before: initInterval,
+	Action: runInterval,
 }
 
-var intervalDrugName string
+var (
+	intervalDrugName string
+	intervalNow      bool
+)
 
 func initInterval(ctx *cli.Context) error {
 	intervalDrugName = ctx.Args().First()
+	intervalNow = ctx.Bool("now")
 	return nil
 }
 
@@ -63,11 +73,20 @@ func runInterval(ctx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	prev, err := time.Parse(time.Stamp, intervals[1])
-	if err != nil {
-		return err
+	var interval time.Duration
+	if intervalNow {
+		now, err := time.Parse(time.Stamp, time.Now().Format(time.Stamp))
+		if err != nil {
+			return err
+		}
+		interval = now.Sub(last)
+	} else {
+		prev, err := time.Parse(time.Stamp, intervals[1])
+		if err != nil {
+			return err
+		}
+		interval = last.Sub(prev)
 	}
-	interval := last.Sub(prev)
 	fmt.Print(interval.String())
 
 	return nil
