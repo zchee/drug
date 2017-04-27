@@ -45,7 +45,7 @@ func runTake(ctx *cli.Context) error {
 			return err
 		}
 	} else {
-		if err := osutil.MkdirAll(dataDir(), 0700); err != nil {
+		if err := osutil.MkdirAll(dataDir, 0700); err != nil {
 			return err
 		}
 	}

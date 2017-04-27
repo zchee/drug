@@ -11,10 +11,7 @@ import (
 )
 
 var (
-	dataFile   = filepath.Join(dataDir(), "drug.json")
-	configFile = filepath.Join(dataDir(), "config.json")
+	dataDir    = filepath.Join(xdgbasedir.DataHome(), "drug")
+	dataFile   = filepath.Join(dataDir, "drug.json")
+	configFile = filepath.Join(dataDir, "config.json")
 )
-
-func dataDir() string {
-	return filepath.Join(xdgbasedir.DataHome(), "drug")
-}
