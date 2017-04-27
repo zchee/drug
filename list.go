@@ -18,7 +18,7 @@ import (
 
 var listCommand = cli.Command{
 	Name:  "list",
-	Usage: "Display the recorded results.",
+	Usage: "Display the recorded ingestion time results.",
 	Flags: []cli.Flag{
 		cli.BoolFlag{
 			Name:  "c, count",
