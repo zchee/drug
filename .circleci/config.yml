@@ -13,7 +13,7 @@ jobs:
       - run:
           name: "Install dependency tools for test"
           command: |
-            go get -u github.com/golang/lint
+            go get -u github.com/golang/lint/golint
 
       - run:
           name: "Test all package with code coverage"
