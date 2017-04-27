@@ -26,7 +26,7 @@ var listCommand = cli.Command{
 			Usage: "with count mode.",
 		},
 		cli.BoolFlag{
-			Name:  "l, name",
+			Name:  "n, name",
 			Usage: "list the drug names mode.",
 		},
 	},
@@ -47,7 +47,7 @@ func initList(ctx *cli.Context) error {
 
 func runList(ctx *cli.Context) error {
 	if listCount && listNames {
-		return fmt.Errorf("connot use -count(-c) and -name(-l) at the same time")
+		return fmt.Errorf("connot use -count(-c) and -name(-n) at the same time")
 	}
 
 	if osutil.IsNotExist(dataFile) {
