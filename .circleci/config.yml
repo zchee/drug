@@ -1,0 +1,33 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: golang:1.8.1  # Use latest stable version
+
+    working_directory: '/go/src/github.com/zchee/drug'
+
+    steps:
+      - checkout
+
+      - run:
+          name: "Install dependency tools for test"
+          command: |
+            go get -u github.com/golang/lint
+
+      - run:
+          name: "Test all package with code coverage"
+          command: |
+            go test -v -race -covermode=atomic -coverprofile=coverage.out .
+
+      - run:
+          name: "Uploading coverage reports to codecov"
+          command: |
+            bash <(curl -s https://codecov.io/bash)
+
+      - run:
+          name: "Run linter to all package"
+          command: |
+            test -z "$(gofmt -e -s -l $(find . -not -iwholename '*vendor*' -and -name '*.go' -print) | tee /dev/stderr)"
+            golint -set_exit_status $(go list ./... | grep -v vendor)
+            go vet $(go list ./... | grep -v vendor)
