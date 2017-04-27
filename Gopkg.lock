@@ -1,0 +1,7 @@
+memo = "fbcdff99e1d56af2d6d8751dd5a05abb3da80d72ac289f31ab9f813a35dfb544"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/zchee/go-xdgbasedir"
+  packages = [".","home"]
+  revision = "9e3b9735d059747e24923def768d235d9df86b21"
