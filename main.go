@@ -29,25 +29,23 @@ func main() {
 	app.Name = "drug"
 	app.Usage = "Records ingestion time of the drugs."
 	app.Version = version
-
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name:  "debug",
 			Usage: "enable debug mode",
 		},
 	}
-
 	app.Commands = []cli.Command{
 		listCommand,
 		takeCommand,
 	}
-
 	app.Before = func(ctx *cli.Context) error {
 		if ctx.GlobalBool("debug") {
 			logrus.SetLevel(logrus.DebugLevel)
 		}
 		return nil
 	}
+
 	cli.ErrWriter = &fatalWriter{cli.ErrWriter}
 	if err := app.Run(os.Args); err != nil {
 		fatal(err)
