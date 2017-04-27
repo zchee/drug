@@ -13,6 +13,7 @@ vendor/clean:  ## Cleanup vendor packages "*_test" files, testdata and nogo file
 		-or -name '.gitignore' \
 		-or -name '*.yml' \
 		-or -name '*.txtr' \
+		-or -name '*.csv' \
 		-or -name '*.vim' \
 		-or -name '*.el' \) \
 		-type f -print -exec rm {} ";"
