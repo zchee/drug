@@ -5,6 +5,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -24,19 +25,31 @@ var listCommand = cli.Command{
 			Name:  "c, count",
 			Usage: "with count mode.",
 		},
+		cli.BoolFlag{
+			Name:  "l, name",
+			Usage: "list the drug names mode.",
+		},
 	},
 	Before: initList,
 	Action: runList,
 }
 
-var listCount bool
+var (
+	listCount bool
+	listNames bool
+)
 
 func initList(ctx *cli.Context) error {
 	listCount = ctx.Bool("count")
+	listNames = ctx.Bool("name")
 	return nil
 }
 
 func runList(ctx *cli.Context) error {
+	if listCount && listNames {
+		return fmt.Errorf("connot use -count(-c) and -name(-l) at the same time")
+	}
+
 	if osutil.IsNotExist(dataFile) {
 		return fmt.Errorf("Not exist %s file", dataFile)
 	}
@@ -50,8 +63,21 @@ func runList(ctx *cli.Context) error {
 		return err
 	}
 
+	if listNames {
+		var buf bytes.Buffer
+		seen := make(map[string]bool)
+		for _, d := range data {
+			if !seen[d.Name] {
+				buf.WriteString(d.Name + "\n")
+				seen[d.Name] = true
+			}
+		}
+		fmt.Print(buf.String())
+		return nil
+	}
 	table := tablewriter.NewWriter(os.Stdout)
-	if listCount {
+	switch {
+	case listCount:
 		table.SetHeader([]string{"NAME", "COUNT"})
 		m := make(map[string]int)
 		for _, d := range data {
@@ -60,7 +86,7 @@ func runList(ctx *cli.Context) error {
 		for k, v := range m {
 			table.Append([]string{k, strconv.Itoa(v)})
 		}
-	} else {
+	default:
 		table.SetHeader([]string{"NAME", "WHEN"})
 		for _, d := range data {
 			table.Append([]string{d.Name, d.When})
