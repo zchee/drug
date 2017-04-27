@@ -36,6 +36,7 @@ func main() {
 		},
 	}
 	app.Commands = []cli.Command{
+		intervalCommand,
 		listCommand,
 		takeCommand,
 	}
