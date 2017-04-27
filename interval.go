@@ -64,7 +64,7 @@ func runInterval(ctx *cli.Context) error {
 			intervals = append(intervals, d.When)
 		}
 	}
-	if len(intervals) <= 1 {
+	if len(intervals) <= 1 && !intervalNow {
 		return fmt.Errorf("%s was ingested only once", intervalDrugName)
 	}
 
