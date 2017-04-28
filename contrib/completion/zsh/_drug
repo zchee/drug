@@ -43,7 +43,7 @@ function _drug() {
   'help:Show help'
   'interval:Calculate the ingestion interval of the drug'
   'list:List all project available to opensource.apple.com'
-  'take:TODO'
+  'take:Record the ingestion time of the drug'
   )
 
   _arguments -C \
