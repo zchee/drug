@@ -21,21 +21,36 @@ package xdgbasedir
 
 import (
 	"os"
-	"path/filepath"
-	"strconv"
-
-	"github.com/zchee/go-xdgbasedir/home"
+	"sync"
 )
+
+type mode int
+
+const (
+	// Unix unix mode directory structure.
+	Unix mode = iota
+	// Native native mode directory structure.
+	Native
+)
+
+// Mode mode of directory structure. This config only available darwin.
+//
+// If it is set to `Unix`, it refers to the same path as linux. If it is set to `Native`, it refers to the Apple FileSystemProgrammingGuide path.
+// By default, `Unix`.
+var Mode = Unix
+
+// initOnce for run initDir once on darwin.
+var initOnce sync.Once
 
 // DataHome return the XDG_DATA_HOME based directory path.
 //
 // $XDG_DATA_HOME defines the base directory relative to which user specific data files should be stored.
 // If $XDG_DATA_HOME is either not set or empty, a default equal to $HOME/.local/share should be used.
 func DataHome() string {
-	if dataHome := os.Getenv("XDG_DATA_HOME"); dataHome != "" {
-		return dataHome
+	if env := os.Getenv("XDG_DATA_HOME"); env != "" {
+		return env
 	}
-	return filepath.Join(home.Dir(), ".local", "share")
+	return dataHome()
 }
 
 // ConfigHome return the XDG_CONFIG_HOME based directory path.
@@ -43,10 +58,10 @@ func DataHome() string {
 // $XDG_CONFIG_HOME defines the base directory relative to which user specific configuration files should be stored.
 // If $XDG_CONFIG_HOME is either not set or empty, a default equal to $HOME/.config should be used.
 func ConfigHome() string {
-	if configHome := os.Getenv("XDG_CONFIG_HOME"); configHome != "" {
-		return configHome
+	if env := os.Getenv("XDG_CONFIG_HOME"); env != "" {
+		return env
 	}
-	return filepath.Join(home.Dir(), ".config")
+	return configHome()
 }
 
 // DataDirs return the XDG_DATA_DIRS based directory path.
@@ -57,10 +72,10 @@ func ConfigHome() string {
 // TODO(zchee): XDG_DATA_DIRS should be seperated with a colon, We should change return type to the []string
 // which colon seperated value instead of string?
 func DataDirs() string {
-	if dataDirs := os.Getenv("XDG_DATA_DIRS"); dataDirs != "" {
-		return dataDirs
+	if env := os.Getenv("XDG_DATA_DIRS"); env != "" {
+		return env
 	}
-	return filepath.Join(string(filepath.Separator), "usr", "local", "share", string(filepath.ListSeparator), "usr", "share")
+	return dataDirs()
 }
 
 // ConfigDirs return the XDG_CONFIG_DIRS based directory path.
@@ -71,10 +86,10 @@ func DataDirs() string {
 // TODO(zchee): XDG_CONFIG_DIRS should be seperated with a colon, We should change return type to the []string
 // which colon seperated value instead of string?
 func ConfigDirs() string {
-	if configDirs := os.Getenv("XDG_CONFIG_DIRS"); configDirs != "" {
-		return configDirs
+	if env := os.Getenv("XDG_CONFIG_DIRS"); env != "" {
+		return env
 	}
-	return filepath.Join(string(filepath.Separator), "etc", "xdg")
+	return configDirs()
 }
 
 // CacheHome return the XDG_CACHE_HOME based directory path.
@@ -86,12 +101,12 @@ func ConfigDirs() string {
 // Apple's "File System Programming Guide" describe the this directory should be used if users cache files.
 // However, some user who is using the macOS as Unix-like prefers $HOME/.cache.
 // xref:
-//  https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/MacOSXDirectories/MacOSXDirectories.html#//apple_ref/doc/uid/TP40010672-CH10-SW1
+//  https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/MacOSXDirectories/MacOSXDirectories.html
 func CacheHome() string {
-	if cacheHome := os.Getenv("XDG_CACHE_HOME"); cacheHome != "" {
-		return cacheHome
+	if env := os.Getenv("XDG_CACHE_HOME"); env != "" {
+		return env
 	}
-	return filepath.Join(home.Dir(), ".cache")
+	return cacheHome()
 }
 
 // RuntimeDir return the XDG_RUNTIME_DIR based directory path.
@@ -105,8 +120,8 @@ func CacheHome() string {
 // xref:
 //	http://serverfault.com/questions/388840/good-default-for-xdg-runtime-dir/727994#727994
 func RuntimeDir() string {
-	if runtimeDir := os.Getenv("XDG_RUNTIME_DIR"); runtimeDir != "" {
-		return runtimeDir
+	if env := os.Getenv("XDG_RUNTIME_DIR"); env != "" {
+		return env
 	}
-	return filepath.Join(string(filepath.Separator), "run", "user", strconv.Itoa(os.Getuid()))
+	return runtimeDir()
 }
